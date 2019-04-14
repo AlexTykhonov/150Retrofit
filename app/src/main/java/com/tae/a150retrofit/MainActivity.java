@@ -15,10 +15,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.tae.a150retrofit.RetrofitClient.BASE_URL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerViewAdapter = new PostsAdapter(this);
     recyclerView.setAdapter(recyclerViewAdapter);
+
+
 
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
     interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -64,5 +62,7 @@ public class MainActivity extends AppCompatActivity {
     public void handleError(Throwable t){
         System.out.println(t+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
+
+
 }
 

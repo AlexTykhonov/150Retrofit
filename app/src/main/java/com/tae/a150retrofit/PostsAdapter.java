@@ -13,13 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>
+
 {
+    public interface onItemClickListener {
+        public void onItemClick();
+    }
+
     private List<PojoVal> posts;
     Context context;
     public PostsAdapter(Context context) {
         this.posts = new ArrayList<>();
         this.context = context;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -31,11 +37,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>
     public void onBindViewHolder(ViewHolder holder, int position) {
         PojoVal post = posts.get(position);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            holder.post.setText(post.getCc());
+            holder.post.setText(post.getTxt());
         } else {
             holder.post.setText(Html.fromHtml(post.getCc()));
         }
-        holder.site.setText(post.getTxt());
+        // поискать решение округления
+        double rate;
+        rate = post.getRate();
+        double rate2 = Math.round(rate);
+
+        holder.site.setText(post.getRate().toString());
     }
 
     @Override
@@ -52,8 +63,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>
 
         public ViewHolder(View itemView) {
             super(itemView);
-            post = (TextView) itemView.findViewById(R.id.textView);
-         site = (TextView) itemView.findViewById(R.id.textView2);
+            post = (TextView) itemView.findViewById(R.id.val);
+         site = (TextView) itemView.findViewById(R.id.rate);
 
         }
     }
