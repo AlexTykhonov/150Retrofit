@@ -11,6 +11,7 @@ public class RetrofitClient {
 
     public static final String BASE_URL = "https://bank.gov.ua/NBUStatService/v1/statdirectory/";
 
+
     public static Retrofit callRetrofit() {
         if (retrofit == null) {
              retrofit = new Retrofit.Builder()

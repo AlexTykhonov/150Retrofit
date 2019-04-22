@@ -1,9 +1,12 @@
 package com.tae.a150retrofit;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PojoVal {
+public class PojoVal implements Parcelable {
 
 @SerializedName("r030")
 @Expose
@@ -25,7 +28,45 @@ private String cc;
 @Expose
 private String exchangedate;
 
-public Integer getR030() {
+    public PojoVal(Integer r030, String txt, Double rate, String cc, String exchangedate) {
+        this.r030 = r030;
+        this.txt = txt;
+        this.rate = rate;
+        this.cc = cc;
+        this.exchangedate = exchangedate;
+    }
+
+    public PojoVal() {
+    }
+
+    public PojoVal(Double rate, String cc) {
+        this.rate = rate;
+        this.cc = cc;
+        }
+
+    public PojoVal(Double rate, String cc, String date) {
+        this.rate = rate;
+        this.cc = cc;
+        this.exchangedate = date;
+    }
+
+
+    public static final Creator<PojoVal> CREATOR = new Creator<PojoVal>() {
+        @Override
+        public PojoVal createFromParcel(Parcel in) {
+            String val = in.readString();
+            Double rate = in.readDouble();
+            String exchangedate = in.readString();
+            return new PojoVal(rate, val, exchangedate);
+        }
+
+        @Override
+        public PojoVal[] newArray(int size) {
+            return new PojoVal[size];
+        }
+    };
+
+    public Integer getR030() {
         return r030;
         }
 
@@ -65,4 +106,26 @@ public void setExchangedate(String exchangedate) {
         this.exchangedate = exchangedate;
         }
 
-        }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(getCc());
+        dest.writeDouble(getRate());
+        dest.writeString(getExchangedate());
+    }
+
+    @Override
+    public String toString() {
+        return "PojoVal{" +
+                "r030=" + r030 +
+                ", txt='" + txt + '\'' +
+                ", rate=" + rate +
+                ", cc='" + cc + '\'' +
+                ", exchangedate='" + exchangedate + '\'' +
+                '}';
+    }
+}

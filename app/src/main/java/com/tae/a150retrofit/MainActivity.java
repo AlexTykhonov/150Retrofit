@@ -4,13 +4,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -18,10 +24,12 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
+    Date today;
     Retrofit retrofit;
     RecyclerView recyclerView;
     PostsAdapter recyclerViewAdapter;
     RetrofitClient retrofitClient;
+    TextView data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +41,20 @@ public class MainActivity extends AppCompatActivity {
     recyclerViewAdapter = new PostsAdapter(this);
     recyclerView.setAdapter(recyclerViewAdapter);
 
+    // date
+        today = new Date();
+        DateFormat dateformat = new SimpleDateFormat("yyyyMMdd");
+        System.out.println(dateformat.format(today));
+        data = findViewById(R.id.datatoday);
+        data.setText(today.toString());
 
+        Dispatcher dispatcher=new Dispatcher();
+        dispatcher.setMaxRequests(3);
 
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
     interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
     OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
+        client.dispatcher().setMaxRequestsPerHost(3);
 
     retrofit= retrofitClient.callRetrofit();
     NbuInterface nbuInterface = retrofit.create(NbuInterface.class);
