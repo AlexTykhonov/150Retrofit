@@ -21,6 +21,8 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
+import com.jjoe64.graphview.Viewport;
+
 
 public class HistoryActivity extends AppCompatActivity {
     PojoVal pojoParcel;
@@ -31,9 +33,10 @@ public class HistoryActivity extends AppCompatActivity {
     Date today;
     Date yesterday;
     Date datebeforeyesterday;
-
     ArrayList<PojoVal> pojoVals = new ArrayList<PojoVal>();
-
+    GraphView graph;
+    DataPoint[] dataPoints = new DataPoint[3];
+    LineGraphSeries<DataPoint> series;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,15 @@ public class HistoryActivity extends AppCompatActivity {
         today = new Date();
         DateFormat dateformat = new SimpleDateFormat("yyyyMMdd");
         System.out.println(dateformat.format(today));
+
+        series = new LineGraphSeries<DataPoint>();
+        graph = (GraphView) findViewById(R.id.graph);
+        graph.addSeries(series);
+//        ViewPort viewPort = graph.getViewport();
+//        viewPort.setYAxisBoundsManual(true);
+//        viewPort.setMinY(0);
+//        viewPort.setMaxY(10);
+//        viewPort.setScrollable(true);
 
         // dates~~~~~~~~~
 
@@ -86,15 +98,10 @@ public class HistoryActivity extends AppCompatActivity {
         System.out.println(pojoParcel.getRate()+ " this is the currency rate for chart!!!!");
     }
 
-    public void createGraphView () {
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
-                new DataPoint(1, 1),
-                new DataPoint(2, 2),
-                new DataPoint(3, 3)
-        });
-        series.appendData(new DataPoint(2,2), true,10);
-        graph.addSeries(series);
+    public void createGraphView (DataPoint dataPoint) {
+
+
+        series.appendData(dataPoint, false, 3);
         System.out.println(pojoVals.size()+"   SIZE! ! ! !!!!  ! ! ! ! ++++++++++++++++++++++++++++++++++++++");
     }
 
@@ -102,14 +109,15 @@ public class HistoryActivity extends AppCompatActivity {
         if (pojoNbu != null ) {
             Toast toast = Toast.makeText(this,pojoNbu.toString(),Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0 );
-            System.out.println(pojoNbu.get(0).toString()+"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ POJO SIZE");
-
+            int j=0;
+            PojoVal pojoVal = pojoNbu.get(j++);
+            System.out.println(pojoVal.toString()+"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ POJO VAL");
             pojoVals.add(pojoNbu.get(0));
-
             toast.show();
 
-            createGraphView();
-
+            int i = 0;
+            DataPoint dataPoint = new DataPoint(pojoVals.size(), pojoVal.getRate());
+            createGraphView(dataPoint);
         } else
             {
             Toast.makeText(this, "NO RESULTS FOUND",
