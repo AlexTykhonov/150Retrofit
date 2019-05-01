@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">150Retrofit</string>
+    <string name="firstscreentitle">Курс валют НБУ на:</string>
+    <string name="firstscreendate">TextView</string>
 </resources>

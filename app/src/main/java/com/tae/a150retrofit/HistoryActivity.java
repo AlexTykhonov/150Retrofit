@@ -61,11 +61,6 @@ public class HistoryActivity extends AppCompatActivity {
         series = new LineGraphSeries<DataPoint>();
         graph = (GraphView) findViewById(R.id.graph);
         graph.addSeries(series);
-//        ViewPort viewPort = graph.getViewport();
-//        viewPort.setYAxisBoundsManual(true);
-//        viewPort.setMinY(0);
-//        viewPort.setMaxY(10);
-//        viewPort.setScrollable(true);
 
         // dates~~~~~~~~~
 
@@ -107,14 +102,10 @@ public class HistoryActivity extends AppCompatActivity {
 
     public void handleResults(ArrayList<PojoVal> pojoNbu) {
         if (pojoNbu != null ) {
-            Toast toast = Toast.makeText(this,pojoNbu.toString(),Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0 );
             int j=0;
             PojoVal pojoVal = pojoNbu.get(j++);
             System.out.println(pojoVal.toString()+"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ POJO VAL");
             pojoVals.add(pojoNbu.get(0));
-            toast.show();
-
             int i = 0;
             DataPoint dataPoint = new DataPoint(pojoVals.size(), pojoVal.getRate());
             createGraphView(dataPoint);

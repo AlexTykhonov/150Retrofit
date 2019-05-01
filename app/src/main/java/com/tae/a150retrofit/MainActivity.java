@@ -8,11 +8,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -24,12 +29,13 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
+
     Date today;
     Retrofit retrofit;
     RecyclerView recyclerView;
     PostsAdapter recyclerViewAdapter;
     RetrofitClient retrofitClient;
-    TextView data;
+    TextView data, usdfield, eurfield;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     // date
         today = new Date();
-        DateFormat dateformat = new SimpleDateFormat("yyyyMMdd");
+        DateFormat dateformat = new SimpleDateFormat("ddMM");
         System.out.println(dateformat.format(today));
         data = findViewById(R.id.datatoday);
         data.setText(today.toString());
@@ -68,8 +74,27 @@ public class MainActivity extends AppCompatActivity {
     {
         if (pojoNbu != null ) {
             System.out.println("&&*^&*^&*^*^^*&^*^*&^*&^^&*^**&^^&* THIS IS POJO NBU!!!!!    ---> "+pojoNbu);
-            recyclerViewAdapter.setData(pojoNbu);
+        for (int i=0; i<pojoNbu.size();i++) {
+            if (pojoNbu.get(i).getR030()== 840) {
+                pojoNbu.get(i).setPriority(10);
+            }
+            if (pojoNbu.get(i).getR030()==978) {
+                pojoNbu.get(i).setPriority(9);
+                }
+                else {pojoNbu.get(i).setPriority(1);}
+        }
 
+        class PriorityComparator implements Comparator <PojoVal> {
+            @Override
+            public int compare(PojoVal o1, PojoVal o2) {
+                return o1.getPriority()-o2.getPriority();
+            }
+        }
+
+            Collections.sort(pojoNbu,new PriorityComparator());
+            Collections.sort(pojoNbu);
+
+            recyclerViewAdapter.setData(pojoNbu);
         } else {
             Toast.makeText(this, "NO RESULTS FOUND",
                     Toast.LENGTH_LONG).show();

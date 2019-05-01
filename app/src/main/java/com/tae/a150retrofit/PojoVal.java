@@ -2,11 +2,12 @@ package com.tae.a150retrofit;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PojoVal implements Parcelable {
+public class PojoVal implements Parcelable, Comparable <PojoVal> {
 
 @SerializedName("r030")
 @Expose
@@ -27,6 +28,8 @@ private String cc;
 @SerializedName("exchangedate")
 @Expose
 private String exchangedate;
+
+    private int priority;
 
     public PojoVal(Integer r030, String txt, Double rate, String cc, String exchangedate) {
         this.r030 = r030;
@@ -106,6 +109,14 @@ public void setExchangedate(String exchangedate) {
         this.exchangedate = exchangedate;
         }
 
+        public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -127,5 +138,10 @@ public void setExchangedate(String exchangedate) {
                 ", cc='" + cc + '\'' +
                 ", exchangedate='" + exchangedate + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(@NonNull PojoVal o) {
+        return this.getPriority()-o.getPriority();
     }
 }

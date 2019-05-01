@@ -9,3 +9,5 @@ h
 8app/src/main/java/com/tae/a150retrofit/NbuInterface.java,e/7/e73f4ecdf388414d7b1e7015215f84b9917d6337
 j
 :app/src/main/java/com/tae/a150retrofit/RetrofitClient.java,7/d/7dc03f315d3d84c3a2f791cee3a22145ff753fa0
+k
+;app/src/main/java/com/tae/a150retrofit/HistoryActivity.java,a/7/a7b8bf7395045d2f8ae5e966ef6179c6669e0a92
