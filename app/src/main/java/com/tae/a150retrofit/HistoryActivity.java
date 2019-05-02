@@ -7,6 +7,8 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -74,9 +76,9 @@ public class HistoryActivity extends AppCompatActivity {
         System.out.println(dateformat.format(datebeforeyesterday)+ "THIS IS DATE BEFORE YESTERDAY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
         //dates~~~~~~~~~
+        //Загрузка данных на позавчера
 
-        //Загрузка данных на сегодня
-        nbuInterface.getHistory(currClick,dateformat.format(today),"json").subscribeOn(Schedulers.computation())
+        nbuInterface.getHistory(currClick, dateformat.format(datebeforeyesterday),"json").subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleResults, this::handleError);
 
@@ -85,26 +87,27 @@ public class HistoryActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleResults, this::handleError);
 
-        //Загрузка данных на позавчера
-        nbuInterface.getHistory(currClick, dateformat.format(datebeforeyesterday),"json").subscribeOn(Schedulers.computation())
+        //Загрузка данных на сегодня
+        nbuInterface.getHistory(currClick,dateformat.format(today),"json").subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleResults, this::handleError);
 
-        System.out.println(pojoParcel.getRate()+ " this is the currency rate for chart!!!!");
+        Toast.makeText(this,pojoParcel.getCc()+ " - this is the currency rate",Toast.LENGTH_LONG).show();
     }
 
     public void createGraphView (DataPoint dataPoint) {
-
-
         series.appendData(dataPoint, false, 3);
-        System.out.println(pojoVals.size()+"   SIZE! ! ! !!!!  ! ! ! ! ++++++++++++++++++++++++++++++++++++++");
+        GridLabelRenderer gridLabel = graph.getGridLabelRenderer();
+        gridLabel.setHorizontalAxisTitle("Дати розрахунку");
+        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+        staticLabelsFormatter.setHorizontalLabels(new String[] {datebeforeyesterday.toString(), yesterday.toString(), today.toString()});
+        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
     }
 
     public void handleResults(ArrayList<PojoVal> pojoNbu) {
         if (pojoNbu != null ) {
             int j=0;
             PojoVal pojoVal = pojoNbu.get(j++);
-            System.out.println(pojoVal.toString()+"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ POJO VAL");
             pojoVals.add(pojoNbu.get(0));
             int i = 0;
             DataPoint dataPoint = new DataPoint(pojoVals.size(), pojoVal.getRate());
@@ -115,12 +118,7 @@ public class HistoryActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     }
-
     public void handleError(Throwable t){
         System.out.println(t+"!!!!!!!!!!!!!!!  ERROR  !!!!!!!!!!!!!!");
     }
 }
-
-
-// создать новый проект с помощью графью в котором данные выводятся в реальном времени (рандом)
-// взять из примера и поиграть с методами

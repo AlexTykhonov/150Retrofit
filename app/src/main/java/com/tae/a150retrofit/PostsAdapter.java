@@ -47,13 +47,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             holder.post.setText(post.getTxt());
         } else {
             holder.post.setText(Html.fromHtml(post.getCc()));
-
         }
-        // поискать решение округления
+
+
+
+        // rounding
         double rate;
         rate = post.getRate();
-        double rate2 = Math.round(rate);
-        holder.site.setText(post.getRate().toString());
+        String rate2 = String.valueOf(Math.round(rate*100.0)/100.0);
+        holder.site.setText(rate2);
 
         //
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +64,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                 Toast.makeText(context, post.getRate().toString(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, HistoryActivity.class);
-//                intent.putExtra("val", post.getCc());
-//                intent.putExtra("rate", post.getRate());
+
                 intent.putExtra("Parcel", post);
                 context.startActivity(intent);
             }
