@@ -49,8 +49,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             holder.post.setText(Html.fromHtml(post.getCc()));
         }
 
-
-
         // rounding
         double rate;
         rate = post.getRate();

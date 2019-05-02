@@ -98,9 +98,14 @@ public class HistoryActivity extends AppCompatActivity {
     public void createGraphView (DataPoint dataPoint) {
         series.appendData(dataPoint, false, 3);
         GridLabelRenderer gridLabel = graph.getGridLabelRenderer();
-        gridLabel.setHorizontalAxisTitle("Дати розрахунку");
+        gridLabel.setHorizontalAxisTitle("Дати");
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
-        staticLabelsFormatter.setHorizontalLabels(new String[] {datebeforeyesterday.toString(), yesterday.toString(), today.toString()});
+        DateFormat dateformat1 = new SimpleDateFormat("dd.MM");
+
+        staticLabelsFormatter.setHorizontalLabels(new String[] {
+                dateformat1.format(datebeforeyesterday),
+                dateformat1.format(yesterday),
+                dateformat1.format(today)});
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
     }
 
