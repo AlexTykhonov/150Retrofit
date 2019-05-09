@@ -1,4 +1,4 @@
-package com.tae.a150retrofit;
+package com.tae.vkursi;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

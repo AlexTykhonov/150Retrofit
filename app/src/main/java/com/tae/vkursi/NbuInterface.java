@@ -1,7 +1,6 @@
-package com.tae.a150retrofit;
+package com.tae.vkursi;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

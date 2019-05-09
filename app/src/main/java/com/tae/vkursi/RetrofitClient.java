@@ -1,4 +1,4 @@
-package com.tae.a150retrofit;
+package com.tae.vkursi;
 
 
 import retrofit2.Retrofit;

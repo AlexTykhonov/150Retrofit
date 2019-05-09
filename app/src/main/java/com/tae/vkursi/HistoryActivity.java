@@ -1,15 +1,12 @@
-package com.tae.a150retrofit;
+package com.tae.vkursi;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
-import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -18,12 +15,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
-import com.jjoe64.graphview.Viewport;
 
 
 public class HistoryActivity extends AppCompatActivity {
@@ -65,7 +60,6 @@ public class HistoryActivity extends AppCompatActivity {
         graph.addSeries(series);
 
         // dates~~~~~~~~~
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(today);
         calendar.add(Calendar.DATE, -1);

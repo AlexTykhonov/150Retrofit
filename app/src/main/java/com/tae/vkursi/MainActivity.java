@@ -1,4 +1,4 @@
-package com.tae.a150retrofit;
+package com.tae.vkursi;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,18 +6,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
